@@ -1,0 +1,6 @@
+#Mysql
+    Port: 3306
+    username: admin
+    password: password
+    database: jaspreetFlourMill
+
