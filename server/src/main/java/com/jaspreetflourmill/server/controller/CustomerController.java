@@ -60,4 +60,9 @@ public class CustomerController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id){
+        customerService.deleteCustomer(id);
+    }
 }
