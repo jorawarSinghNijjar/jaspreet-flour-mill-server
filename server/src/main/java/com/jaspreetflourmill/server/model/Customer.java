@@ -1,8 +1,13 @@
 package com.jaspreetflourmill.server.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="customers")
@@ -14,6 +19,10 @@ public class Customer {
 
     @OneToOne(mappedBy = "customer")
     private CustomerAccount customerAccount;
+
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    private List<Transaction> transactions = new ArrayList<>();
 
     private String name;
     private String address;
@@ -103,18 +112,12 @@ public class Customer {
         this.idProof = idProof;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", rationCardNo='" + rationCardNo + '\'' +
-                ", dob='" + dob + '\'' +
-                ", adhaarNo='" + adhaarNo + '\'' +
-                ", idProof=" + idProof +
-                '}';
+
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 
-
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 }

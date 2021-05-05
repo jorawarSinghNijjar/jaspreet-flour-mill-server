@@ -99,17 +99,4 @@ public class Employee {
         this.dob = dob;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "employeeId=" + employeeId +
-                ", name='" + name + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", contactNumber='" + contactNumber + '\'' +
-                ", address='" + address + '\'' +
-                ", jobDesignation='" + jobDesignation + '\'' +
-                ", dob='" + dob + '\'' +
-                '}';
-    }
 }
