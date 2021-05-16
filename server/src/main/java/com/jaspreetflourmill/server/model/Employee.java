@@ -1,5 +1,7 @@
 package com.jaspreetflourmill.server.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -7,41 +9,50 @@ import java.time.format.DateTimeFormatter;
 @Entity
 @Table(name="employees")
 public class Employee {
-    private Integer employeeId;
+
+    @Id
+    private String employeeId;
+
+    @NotNull
     private String name;
-    private String username;
+
+    @NotNull
     private String password;
+
+    @NotNull
     private String contactNumber;
+
+    @NotNull
     private String address;
+
     private String jobDesignation;
+
+    @NotNull
     private String dob;
 
     public Employee(){
 
     }
 
-    public Employee(String name, String username, String password, String contactnumber, String address, String jobDesignation, LocalDate dob) {
+    public Employee(String name, String password, String contactNumber, String address, String jobDesignation, LocalDate dob) {
         this.name = name;
-        this.username = username;
         this.password = password;
-        this.contactNumber = contactnumber;
+        this.contactNumber = contactNumber;
         this.address = address;
         this.jobDesignation = jobDesignation;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
         this.dob = formatter.format(dob);
 
-//        this.employeeId = dob + name;
+        this.employeeId = name.substring(0,3) + "00" + dob.getMonthValue();
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getEmployeeId() {
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Integer id){
-        this.employeeId = id;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
     public String getName() {
         return name;
@@ -49,14 +60,6 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {

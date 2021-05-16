@@ -23,11 +23,11 @@ public class EmployeeService {
         employeeRepository.save(employee);
     }
 
-    public Employee getEmployee(Integer id){
+    public Employee getEmployee(String id){
         return employeeRepository.findById(id).get();
     }
 
-    public void deleteEmployee(Integer id){
+    public void deleteEmployee(String id){
         employeeRepository.deleteById(id);
     }
 

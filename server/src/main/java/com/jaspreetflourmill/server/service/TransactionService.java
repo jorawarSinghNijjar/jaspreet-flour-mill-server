@@ -21,7 +21,7 @@ public class TransactionService {
     }
 
     public List<Transaction> findByCustomer(Customer customer){
-        return transactionRepository.findByCustomer(customer);
+        return transactionRepository.findByCustomerOrderByDate(customer);
     }
 
     public void saveTransaction(Transaction transaction){

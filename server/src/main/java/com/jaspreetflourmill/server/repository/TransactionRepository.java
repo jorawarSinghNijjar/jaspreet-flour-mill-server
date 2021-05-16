@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface TransactionRepository extends JpaRepository<Transaction,String> {
 
-    List<Transaction> findByCustomer(Customer customer);
+    List<Transaction> findByCustomerOrderByDate(Customer customer);
 }

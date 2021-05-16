@@ -22,7 +22,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> get(@PathVariable Integer id){
+    public ResponseEntity<Employee> get(@PathVariable String id){
         try{
             Employee employee = employeeService.getEmployee(id);
             return new ResponseEntity<>(employee, HttpStatus.OK);
@@ -33,7 +33,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Employee employee, @PathVariable Integer id){
+    public ResponseEntity<?> update(@RequestBody Employee employee, @PathVariable String id){
         try{
             Employee existEmployee = employeeService.getEmployee(id);
             employee.setEmployeeId(id);
@@ -59,7 +59,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id){
+    public void delete(@PathVariable String id){
         employeeService.deleteEmployee(id);
     }
 }

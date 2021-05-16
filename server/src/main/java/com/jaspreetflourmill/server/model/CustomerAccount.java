@@ -1,5 +1,7 @@
 package com.jaspreetflourmill.server.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,12 +13,23 @@ public class CustomerAccount {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="customer_id_fk",referencedColumnName = "customer_id")
+    @NotNull
     private Customer customer;
+
+    @NotNull
     private double wheatDepositQty;
+
+    @NotNull
     private double wheatProcessingDeductionQty;
+
+    @NotNull
     private double initialWheatQty;
+
     private double currentWheatBalance;
+
     private double grindingChargesBalance;
+
+    @NotNull
     private String startDate;
 
     public CustomerAccount(Customer customer, double wheatDepositQty, double wheatProcessingDeductionQty) {

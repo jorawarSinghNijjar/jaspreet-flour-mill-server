@@ -1,6 +1,7 @@
 package com.jaspreetflourmill.server.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,13 +18,22 @@ public class Transaction {
 
     @Id
     private String transactionId;
+
+    @NotNull
     private String date;
+    @NotNull
     private double attaPickupQty;
+    @NotNull
     private double grindingCharges;
+    @NotNull
     private double grindingChargesPaid;
+    @NotNull
     private double customerBalanceGrindingCharges;
+    @NotNull
     private double customerStoredAttaBalanceQty;
+    @NotNull
     private String orderPickedBy;
+    @NotNull
     private String cashierName;
 
     public Transaction(Customer customer,double attaPickupQty,double grindingCharges, double grindingChargesPaid,

@@ -2,6 +2,7 @@ package com.jaspreetflourmill.server.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -24,12 +25,24 @@ public class Customer {
     @JsonIgnore
     private List<Transaction> transactions = new ArrayList<>();
 
+    @NotNull
     private String name;
+
+    @NotNull
     private String address;
+
+    @NotNull
     private String phoneNumber;
+
     private String rationCardNo;
+
+    @NotNull
     private String dob;
+
+    @NotNull
     private String adhaarNo;
+
+    @NotNull
     private String idProof;
 
     public Customer(String name, String address, String phoneNumber, String rationCardNo, LocalDate dob, String adhaarNo,
