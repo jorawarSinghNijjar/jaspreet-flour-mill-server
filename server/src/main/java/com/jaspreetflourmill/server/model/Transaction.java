@@ -23,6 +23,10 @@ public class Transaction {
     private String date;
     @NotNull
     private double attaPickupQty;
+
+    @NotNull
+    private double grindingRate;
+
     @NotNull
     private double grindingCharges;
     @NotNull
@@ -36,11 +40,13 @@ public class Transaction {
     @NotNull
     private String cashierName;
 
-    public Transaction(Customer customer,double attaPickupQty,double grindingCharges, double grindingChargesPaid,
+    public Transaction(Customer customer,double attaPickupQty,double grindingRate,double grindingCharges,
+                       double grindingChargesPaid,
                        String orderPickedBy,
                        String cashierName) {
         this.customer = customer;
         this.attaPickupQty = attaPickupQty;
+        this.grindingRate = grindingRate;
         this.grindingCharges = grindingCharges;
         this.grindingChargesPaid = grindingChargesPaid;
         this.orderPickedBy = orderPickedBy;
@@ -133,5 +139,13 @@ public class Transaction {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public double getGrindingRate() {
+        return grindingRate;
+    }
+
+    public void setGrindingRate(double grindingRate) {
+        this.grindingRate = grindingRate;
     }
 }

@@ -29,6 +29,8 @@ public class CustomerAccount {
 
     private double grindingChargesBalance;
 
+    private double grindingRate;
+
     @NotNull
     private String startDate;
 
@@ -40,6 +42,14 @@ public class CustomerAccount {
         this.currentWheatBalance = initialWheatQty;
         this.grindingChargesBalance = 0;
 
+    }
+
+    public double getGrindingRate() {
+        return grindingRate;
+    }
+
+    public void setGrindingRate(double grindingRate) {
+        this.grindingRate = grindingRate;
     }
 
     public void setWheatProcessingDeductionQty(double wheatProcessingDeductionQty) {
