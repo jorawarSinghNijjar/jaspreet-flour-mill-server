@@ -1,19 +1,17 @@
 package com.jaspreetflourmill.server.model;
-
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="customerAccounts")
 public class CustomerAccount {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="customer_account_id")
     private Integer customerAccountId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="customer_id_fk",referencedColumnName = "customer_id")
-    @NotNull
+    @OneToOne
+    @JoinColumn(name = "customerId",referencedColumnName = "customer_id")
     private Customer customer;
 
     @NotNull
@@ -118,5 +116,28 @@ public class CustomerAccount {
 
     public double getGrindingChargesBalance() {
         return grindingChargesBalance;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerAccount{" +
+                "customerAccountId=" + customerAccountId +
+                ", customer=" + customer +
+                ", wheatDepositQty=" + wheatDepositQty +
+                ", wheatProcessingDeductionQty=" + wheatProcessingDeductionQty +
+                ", initialWheatQty=" + initialWheatQty +
+                ", currentWheatBalance=" + currentWheatBalance +
+                ", grindingChargesBalance=" + grindingChargesBalance +
+                ", grindingRate=" + grindingRate +
+                ", startDate='" + startDate + '\'' +
+                '}';
     }
 }

@@ -2,9 +2,11 @@ package com.jaspreetflourmill.server.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,8 +16,8 @@ import java.util.List;
 @Table(name="customers")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
+    @Column(name="customer_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer customerId;
 
     @OneToOne(mappedBy = "customer")

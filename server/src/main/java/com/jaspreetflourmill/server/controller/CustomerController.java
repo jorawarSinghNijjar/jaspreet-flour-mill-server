@@ -36,10 +36,12 @@ public class CustomerController {
     @PostMapping("")
     public @ResponseBody ResponseEntity<String> add(@RequestBody Customer customer){
         try{
+            System.out.println("Registering customer --> " + customer.getName());
             customerService.saveCustomer(customer);
             return new ResponseEntity<>("Customer Registered Successfully", HttpStatus.OK);
         }
         catch(Exception e){
+            System.out.println("Customer Registration Failed!!!!");
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }

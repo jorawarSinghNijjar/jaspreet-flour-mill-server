@@ -25,7 +25,7 @@ public class CustomerAccountService {
     }
 
     public CustomerAccount getCustomerAccount(Integer id){
-        return customerAccountRepository.findById(id).get();
+        return customerAccountRepository.findCustomerAccountByCustomer(id);
     }
     public void deleteCustomerAccount(Integer id){
         customerAccountRepository.deleteById(id);

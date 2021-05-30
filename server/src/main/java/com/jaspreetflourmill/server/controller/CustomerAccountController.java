@@ -38,10 +38,12 @@ public class CustomerAccountController {
     @PostMapping("")
     public @ResponseBody ResponseEntity<String> add(@RequestBody CustomerAccount customerAccount){
         try{
+            System.out.println("Registering cusomer account --> "+ customerAccount.getCustomerAccountId());
             customerAccountService.saveCustomerAccount(customerAccount);
             return new ResponseEntity<>("Customer Account Registered Successfully", HttpStatus.OK);
         }
         catch(Exception e){
+            System.out.println("Customer Account Update Failed !!!!" + e.getMessage());
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
