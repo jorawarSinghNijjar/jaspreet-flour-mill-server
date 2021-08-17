@@ -21,7 +21,13 @@ public class Transaction {
     private String transactionId;
 
     @NotNull
+    @Column(columnDefinition = "DATE")
     private String date;
+
+    @NotNull
+    @Column(columnDefinition = "TIME")
+    private String time;
+
     @NotNull
     private double attaPickupQty;
 
@@ -56,11 +62,14 @@ public class Transaction {
         this.transactionId = uuid.toString();
 
         LocalDateTime dateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss");
-        this.date = formatter.format(dateTime);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+        this.date = dateFormat.format(dateTime);
+        this.time = timeFormat.format(dateTime);
 
         this.customerBalanceGrindingCharges = grindingCharges - grindingChargesPaid;
 
+        System.out.println("Grinding Charges --> " + grindingCharges);
 
     }
 
@@ -148,5 +157,39 @@ public class Transaction {
 
     public void setGrindingRate(double grindingRate) {
         this.grindingRate = grindingRate;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public double getGrindingCharges() {
+        return grindingCharges;
+    }
+
+    public void setGrindingCharges(double grindingCharges) {
+        this.grindingCharges = grindingCharges;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "customer=" + customer +
+                ", transactionId='" + transactionId + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", attaPickupQty=" + attaPickupQty +
+                ", grindingRate=" + grindingRate +
+                ", grindingCharges=" + grindingCharges +
+                ", grindingChargesPaid=" + grindingChargesPaid +
+                ", customerBalanceGrindingCharges=" + customerBalanceGrindingCharges +
+                ", customerStoredAttaBalanceQty=" + customerStoredAttaBalanceQty +
+                ", orderPickedBy='" + orderPickedBy + '\'' +
+                ", cashierName='" + cashierName + '\'' +
+                '}';
     }
 }

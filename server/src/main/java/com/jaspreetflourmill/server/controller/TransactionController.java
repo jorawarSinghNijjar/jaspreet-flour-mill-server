@@ -1,8 +1,10 @@
 package com.jaspreetflourmill.server.controller;
 
 import com.jaspreetflourmill.server.model.Customer;
+import com.jaspreetflourmill.server.model.SalesToday;
 import com.jaspreetflourmill.server.model.Transaction;
 import com.jaspreetflourmill.server.service.CustomerService;
+import com.jaspreetflourmill.server.service.SalesService;
 import com.jaspreetflourmill.server.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,6 +45,18 @@ public class TransactionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/sales")
+    public ResponseEntity getSalesForToday(){
+        try{
+            SalesToday salesToday = transactionService.getSalesForToday();
+            return new ResponseEntity<>(salesToday,HttpStatus.OK);
+        }
+        catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+    }
+
 
     @PostMapping("")
     public @ResponseBody ResponseEntity<String> add(@RequestBody Transaction transaction){
