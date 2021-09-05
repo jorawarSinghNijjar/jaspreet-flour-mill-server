@@ -29,6 +29,8 @@ public class CustomerAccount {
 
     private double grindingRate;
 
+    private int rowsPrinted;
+
     @NotNull
     private String startDate;
 
@@ -39,8 +41,25 @@ public class CustomerAccount {
         this.initialWheatQty = wheatDepositQty - wheatProcessingDeductionQty;
         this.currentWheatBalance = initialWheatQty;
         this.grindingChargesBalance = 0;
-
+        this.rowsPrinted = 0;
     }
+
+    public int getRowsPrinted() {
+        return rowsPrinted;
+    }
+
+    public void setRowsPrinted(int rowsPrinted) {
+        this.rowsPrinted = rowsPrinted;
+    }
+
+    public void incrementRow(){
+        this.rowsPrinted++;
+    }
+
+    public void printNextPage(){
+        this.rowsPrinted = 0;
+    }
+
 
     public double getGrindingRate() {
         return grindingRate;
