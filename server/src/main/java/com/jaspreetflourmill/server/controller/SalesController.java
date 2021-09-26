@@ -67,6 +67,7 @@ public class SalesController {
     )
     {
         try{
+            System.out.println(sales.toString());
             Sales existingSales = salesService.getSales(date);
             sales.setDate(date);
             salesService.saveSales(sales);
@@ -74,6 +75,7 @@ public class SalesController {
 
         }
         catch(Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }

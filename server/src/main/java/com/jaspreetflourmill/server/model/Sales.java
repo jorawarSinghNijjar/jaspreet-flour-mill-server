@@ -27,6 +27,10 @@ public class Sales {
 
     private int year;
 
+    private Double totalStoredWheatBalance;
+
+    private Double totalWheatDeposited;
+
     private Double totalWheatSold;
 
     private Double totalGrindingCharges;
@@ -49,6 +53,8 @@ public class Sales {
         this.totalWheatSold = totalWheatSold;
         this.totalGrindingCharges = totalGrindingCharges;
         this.totalGrindingChargesPaid = totalGrindingChargesPaid;
+        this.totalStoredWheatBalance = 0.00;
+        this.totalWheatDeposited = 0.00;
     }
 
     public String getDate() {
@@ -97,5 +103,36 @@ public class Sales {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public Double getTotalStoredWheatBalance() {
+        return totalStoredWheatBalance;
+    }
+
+    public void setTotalStoredWheatBalance(Double totalStoredWheatBalance) {
+        this.totalStoredWheatBalance = totalStoredWheatBalance;
+    }
+
+    public Double getTotalWheatDeposited() {
+        return totalWheatDeposited;
+    }
+
+    public void setTotalWheatDeposited(Double totalWheatDeposited) {
+        this.totalWheatDeposited = totalWheatDeposited;
+    }
+
+    @Override
+    public String toString() {
+        return "Sales{" +
+                "date='" + date + '\'' +
+                ", day=" + day +
+                ", month=" + month +
+                ", year=" + year +
+                ", totalStoredWheatBalance=" + totalStoredWheatBalance +
+                ", totalWheatDeposited=" + totalWheatDeposited +
+                ", totalWheatSold=" + totalWheatSold +
+                ", totalGrindingCharges=" + totalGrindingCharges +
+                ", totalGrindingChargesPaid=" + totalGrindingChargesPaid +
+                '}';
     }
 }
