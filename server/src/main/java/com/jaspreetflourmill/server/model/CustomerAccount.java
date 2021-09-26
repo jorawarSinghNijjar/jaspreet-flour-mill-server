@@ -10,7 +10,7 @@ public class CustomerAccount {
     @Column(name="customer_account_id")
     private Integer customerAccountId;
 
-    @OneToOne
+    @OneToOne( cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "customerId",referencedColumnName = "customer_id")
     private Customer customer;
 

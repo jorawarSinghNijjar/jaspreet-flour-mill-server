@@ -31,6 +31,8 @@ public class CustomerAccountController {
             return new ResponseEntity<>(customerAccount, HttpStatus.OK);
         }
         catch(NoSuchElementException e){
+            System.out.println("Customer account not found");
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -38,12 +40,13 @@ public class CustomerAccountController {
     @PostMapping("")
     public @ResponseBody ResponseEntity<String> add(@RequestBody CustomerAccount customerAccount){
         try{
-            System.out.println("Registering cusomer account --> "+ customerAccount.getCustomerAccountId());
+            System.out.println("Registering cusomer account --> "+ customerAccount.getCustomer().getName());
             customerAccountService.saveCustomerAccount(customerAccount);
             return new ResponseEntity<>("Customer Account Registered Successfully", HttpStatus.OK);
         }
         catch(Exception e){
-            System.out.println("Customer Account Update Failed !!!!" + e.getMessage());
+            System.out.println("Customer account registration failed !");
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
@@ -53,14 +56,15 @@ public class CustomerAccountController {
             @RequestBody CustomerAccount customerAccount, @PathVariable Integer id
     )
     {
-        try{
-            CustomerAccount existingCustomerAccount = customerAccountService.getCustomerAccount(id);
-            customerAccount.setCustomerAccountId(id);
-            customerAccountService.saveCustomerAccount(customerAccount);
-            return new ResponseEntity<>("Customer Account Updated Successfully",HttpStatus.OK);
-
+        try {
+                CustomerAccount existingCustomerAccount = customerAccountService.getCustomerAccount(id);
+                customerAccount.setCustomerAccountId(id);
+                customerAccountService.saveCustomerAccount(customerAccount);
+                return new ResponseEntity<>("Customer Account Updated Successfully",HttpStatus.OK);
         }
         catch(Exception e){
+            System.out.println("Customer account update failed !");
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
