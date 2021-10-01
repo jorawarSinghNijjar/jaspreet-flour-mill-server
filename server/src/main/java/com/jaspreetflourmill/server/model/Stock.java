@@ -16,13 +16,12 @@ public class Stock {
     }
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull
     private Double wheatBalance;
 
     public Stock() {
+        this.id = 1;
         this.wheatBalance = 0.00;
     }
 

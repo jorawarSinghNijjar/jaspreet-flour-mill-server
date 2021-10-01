@@ -53,7 +53,7 @@ public class Sales {
         this.totalWheatSold = totalWheatSold;
         this.totalGrindingCharges = totalGrindingCharges;
         this.totalGrindingChargesPaid = totalGrindingChargesPaid;
-        this.totalStoredWheatBalance = 0.00;
+//        this.totalStoredWheatBalance = 0.00;
         this.totalWheatDeposited = 0.00;
     }
 

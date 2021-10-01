@@ -20,7 +20,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer customerId;
 
-    @OneToOne(mappedBy = "customer")
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     private CustomerAccount customerAccount;
 
     @OneToMany(mappedBy = "customer")

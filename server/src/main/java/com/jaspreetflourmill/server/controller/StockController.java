@@ -25,6 +25,11 @@ public class StockController {
             return new ResponseEntity<>(stock, HttpStatus.OK);
         }
         catch(NoSuchElementException e){
+            stockService.saveStock(new Stock());
+            Stock stock = stockService.getStock(1);
+            return new ResponseEntity<>(stock, HttpStatus.OK);
+        }
+        catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<Stock>(HttpStatus.NOT_FOUND);
         }
