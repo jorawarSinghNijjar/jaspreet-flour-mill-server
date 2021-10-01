@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/customer-accounts")
@@ -51,15 +52,16 @@ public class CustomerAccountController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{customerId}")
     public @ResponseBody ResponseEntity<String> update(
-            @RequestBody CustomerAccount customerAccount, @PathVariable Integer id
+            @RequestBody CustomerAccount customerAccount, @PathVariable Integer customerId
     )
     {
         try {
-                CustomerAccount existingCustomerAccount = customerAccountService.getCustomerAccount(id);
-                customerAccount.setCustomerAccountId(id);
+                CustomerAccount existingCustomerAccount = customerAccountService.getCustomerAccount(customerId);
+                customerAccount.setCustomer(existingCustomerAccount.getCustomer());
                 customerAccountService.saveCustomerAccount(customerAccount);
+
                 return new ResponseEntity<>("Customer Account Updated Successfully",HttpStatus.OK);
         }
         catch(Exception e){
