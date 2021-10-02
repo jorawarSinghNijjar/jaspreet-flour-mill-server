@@ -1,7 +1,5 @@
 package com.jaspreetflourmill.server.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -29,7 +27,7 @@ public class Transaction {
     private String time;
 
     @NotNull
-    private double attaPickupQty;
+    private double flourPickupQty;
 
     @NotNull
     private double grindingRate;
@@ -41,18 +39,18 @@ public class Transaction {
     @NotNull
     private double customerBalanceGrindingCharges;
     @NotNull
-    private double customerStoredAttaBalanceQty;
+    private double customerStoredFlourBalanceQty;
     @NotNull
     private String orderPickedBy;
     @NotNull
     private String cashierName;
 
-    public Transaction(Customer customer,double attaPickupQty,double grindingRate,double grindingCharges,
+    public Transaction(Customer customer, double flourPickupQty, double grindingRate, double grindingCharges,
                        double grindingChargesPaid,
                        String orderPickedBy,
                        String cashierName) {
         this.customer = customer;
-        this.attaPickupQty = attaPickupQty;
+        this.flourPickupQty = flourPickupQty;
         this.grindingRate = grindingRate;
         this.grindingCharges = grindingCharges;
         this.grindingChargesPaid = grindingChargesPaid;
@@ -95,12 +93,12 @@ public class Transaction {
         this.date = date;
     }
 
-    public double getAttaPickupQty() {
-        return attaPickupQty;
+    public double getFlourPickupQty() {
+        return flourPickupQty;
     }
 
-    public void setAttaPickupQty(double attaPickupQty) {
-        this.attaPickupQty = attaPickupQty;
+    public void setFlourPickupQty(double flourPickupQty) {
+        this.flourPickupQty = flourPickupQty;
     }
 
     public double getGrindingChargesPaid() {
@@ -119,12 +117,12 @@ public class Transaction {
         this.customerBalanceGrindingCharges = customerBalanceGrindingCharges;
     }
 
-    public double getCustomerStoredAttaBalanceQty() {
-        return customerStoredAttaBalanceQty;
+    public double getCustomerStoredFlourBalanceQty() {
+        return customerStoredFlourBalanceQty;
     }
 
-    public void setCustomerStoredAttaBalanceQty(double customerStoredAttaBalanceQty) {
-        this.customerStoredAttaBalanceQty = customerStoredAttaBalanceQty;
+    public void setCustomerStoredFlourBalanceQty(double customerStoredFlourBalanceQty) {
+        this.customerStoredFlourBalanceQty = customerStoredFlourBalanceQty;
     }
 
     public String getOrderPickedBy() {
@@ -182,12 +180,12 @@ public class Transaction {
                 ", transactionId='" + transactionId + '\'' +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
-                ", attaPickupQty=" + attaPickupQty +
+                ", flourPickupQty=" + flourPickupQty +
                 ", grindingRate=" + grindingRate +
                 ", grindingCharges=" + grindingCharges +
                 ", grindingChargesPaid=" + grindingChargesPaid +
                 ", customerBalanceGrindingCharges=" + customerBalanceGrindingCharges +
-                ", customerStoredAttaBalanceQty=" + customerStoredAttaBalanceQty +
+                ", customerStoredFlourBalanceQty=" + customerStoredFlourBalanceQty +
                 ", orderPickedBy='" + orderPickedBy + '\'' +
                 ", cashierName='" + cashierName + '\'' +
                 '}';
