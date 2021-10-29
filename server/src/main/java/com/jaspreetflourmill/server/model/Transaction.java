@@ -1,10 +1,14 @@
 package com.jaspreetflourmill.server.model;
 
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -44,6 +48,16 @@ public class Transaction {
     private String orderPickedBy;
     @NotNull
     private String cashierName;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date",nullable = false, updatable = false)
+    private Date createDate;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modify_date")
+    private Date modifyDate;
 
     public Transaction(Customer customer, double flourPickupQty, double grindingRate, double grindingCharges,
                        double grindingChargesPaid,

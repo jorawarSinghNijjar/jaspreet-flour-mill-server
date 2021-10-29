@@ -1,6 +1,10 @@
 package com.jaspreetflourmill.server.model;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 @Table(name="customerAccounts")
@@ -33,6 +37,16 @@ public class CustomerAccount {
 
     @NotNull
     private String startDate;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date",nullable = false, updatable = false)
+    private Date createDate;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modify_date")
+    private Date modifyDate;
 
     public CustomerAccount(Customer customer, double wheatDepositQty, double wheatProcessingDeductionQty) {
         this.customer = customer;
