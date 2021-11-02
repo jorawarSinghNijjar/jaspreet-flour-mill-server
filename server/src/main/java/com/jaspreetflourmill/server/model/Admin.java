@@ -1,20 +1,25 @@
 package com.jaspreetflourmill.server.model;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
 @Table(name="admins")
 public class Admin {
-    @Id
-    @Column(nullable = false)
-    private String adminId;
 
+
+    @OneToOne
+    @JoinColumn(name="user",unique=true, nullable=false, updatable=false)
+    private User user;
+
+    @Id @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(nullable = false)
-    private String password;
+    private String id;
 
     @Column(nullable = false)
     private String emailId;
@@ -32,25 +37,17 @@ public class Admin {
     public Admin() {
     }
 
-    public Admin(String adminId, String password) {
-        this.adminId = adminId;
-        this.password = password;
+    public Admin(User user, String emailId) {
+        this.user = user;
+        this.emailId = emailId;
     }
 
-    public String getAdminId() {
-        return adminId;
+    public String getId() {
+        return id;
     }
 
-    public void setAdminId(String adminId) {
-        this.adminId = adminId;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmailId() {
@@ -60,4 +57,13 @@ public class Admin {
     public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

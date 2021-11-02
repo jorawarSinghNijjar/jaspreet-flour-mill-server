@@ -2,29 +2,35 @@ package com.jaspreetflourmill.server.service;
 
 import com.jaspreetflourmill.server.model.Admin;
 import com.jaspreetflourmill.server.model.Employee;
+import com.jaspreetflourmill.server.model.User;
 import com.jaspreetflourmill.server.repository.AdminRepository;
+import com.jaspreetflourmill.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class AdminService {
     @Autowired
     private AdminRepository adminRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public List<Admin> listAllAdmins(){
-        return adminRepository.findAll();
+    public Optional<List<Admin>> listAllAdmins(){
+        return Optional.ofNullable(adminRepository.findAll());
     }
 
     public void saveAdmin(Admin admin){
         adminRepository.save(admin);
     }
 
-    public Admin getAdmin(String id){
-        return adminRepository.findById(id).get();
+    public Optional<Admin> getAdmin(String userId){
+        Optional<User> user = userRepository.getUser(userId);
+        return adminRepository.findByUser(user.get());
     }
 
     public void deleteAdmin(String id){

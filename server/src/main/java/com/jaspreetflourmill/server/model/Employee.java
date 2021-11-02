@@ -1,41 +1,47 @@
 package com.jaspreetflourmill.server.model;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
-@Table(name="employees")
+@Table(name = "employees")
 public class Employee {
 
-    @Id
-    private String employeeId;
 
-    @NotNull
+    @OneToOne
+    @JoinColumn(name = "user", unique=true, nullable=false, updatable=false)
+    private User user;
+
+    @Id
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @Column(nullable = false)
+    private String id;
+
+    @Column(nullable = false)
     private String name;
 
-    @NotNull
-    private String password;
-
-    @NotNull
+    @Column(nullable = false)
     private String contactNumber;
 
-    @NotNull
+    @Column(nullable = false)
     private String address;
 
+    @Column(nullable = false)
     private String jobDesignation;
 
-    @NotNull
+    @Column(nullable = false)
     private String dob;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date",nullable = false, updatable = false)
+    @Column(name = "create_date", nullable = false, updatable = false)
     private Date createDate;
 
     @UpdateTimestamp
@@ -43,13 +49,13 @@ public class Employee {
     @Column(name = "modify_date")
     private Date modifyDate;
 
-    public Employee(){
+    public Employee() {
 
     }
 
-    public Employee(String name, String password, String contactNumber, String address, String jobDesignation, LocalDate dob) {
+    public Employee(User user, String name, String contactNumber, String address, String jobDesignation, LocalDate dob) {
+        this.user = user;
         this.name = name;
-        this.password = password;
         this.contactNumber = contactNumber;
         this.address = address;
         this.jobDesignation = jobDesignation;
@@ -57,30 +63,23 @@ public class Employee {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
         this.dob = formatter.format(dob);
 
-        this.employeeId = name.substring(0,3) + "00" + dob.getMonthValue();
+//        this.id = name.substring(0, 3) + "00" + dob.getMonthValue();
     }
 
-    public String getEmployeeId() {
-        return employeeId;
+    public String getId() {
+        return id;
     }
 
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
+    public void setId(String id) {
+        this.id = id;
     }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getContactNumber() {
@@ -113,6 +112,14 @@ public class Employee {
 
     public void setDob(String dob) {
         this.dob = dob;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

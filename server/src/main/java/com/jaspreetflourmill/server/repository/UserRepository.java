@@ -9,6 +9,7 @@ import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
-public interface AdminRepository extends JpaRepository<Admin,String> {
-    Optional<Admin> findByUser(User user);
+public interface UserRepository extends JpaRepository<User,String> {
+    @Query(value = "SELECT * FROM users WHERE id = ?1", nativeQuery = true)
+    Optional<User> getUser(String id);
 }

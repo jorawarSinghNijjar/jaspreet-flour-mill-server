@@ -1,12 +1,16 @@
 package com.jaspreetflourmill.server.service;
 
+import com.jaspreetflourmill.server.model.Admin;
 import com.jaspreetflourmill.server.model.Employee;
+import com.jaspreetflourmill.server.model.User;
 import com.jaspreetflourmill.server.repository.EmployeeRepository;
+import com.jaspreetflourmill.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -14,6 +18,8 @@ import java.util.List;
 public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Employee> listAllEmployees(){
         return employeeRepository.findAll();
@@ -23,8 +29,9 @@ public class EmployeeService {
         employeeRepository.save(employee);
     }
 
-    public Employee getEmployee(String id){
-        return employeeRepository.findById(id).get();
+    public Optional<Employee> getEmployee(String userId){
+        Optional<User> user = userRepository.getUser(userId);
+        return employeeRepository.findByUser(user.get());
     }
 
     public void deleteEmployee(String id){
