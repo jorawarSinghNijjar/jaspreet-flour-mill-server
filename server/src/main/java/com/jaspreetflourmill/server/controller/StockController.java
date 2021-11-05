@@ -19,34 +19,31 @@ public class StockController {
 
     @GetMapping("/get")
     public ResponseEntity<Stock> get(){
-        System.out.println("Getting stocks");
         try{
-            Stock stock = stockService.getStock(1);
+            Stock stock = stockService.getStock(1).orElseThrow();
             return new ResponseEntity<>(stock, HttpStatus.OK);
         }
         catch(NoSuchElementException e){
             stockService.saveStock(new Stock());
-            Stock stock = stockService.getStock(1);
-            return new ResponseEntity<>(stock, HttpStatus.OK);
+            Stock stock = stockService.getStock(1).orElseThrow();
+            return new ResponseEntity<>(stock, HttpStatus.NOT_FOUND);
         }
         catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity<Stock>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("")
     public @ResponseBody
-    ResponseEntity<String> save(@RequestBody Stock stock){
+    ResponseEntity<Stock> save(@RequestBody Stock stock){
         try{
-            System.out.println("Storing wheat --> " + stock.getWheatBalance());
-            stockService.saveStock(stock);
-            return new ResponseEntity<>("Sales Registered Successfully", HttpStatus.OK);
+            Stock savedStock = stockService.saveStock(stock).orElseThrow();
+            return new ResponseEntity<>(savedStock,HttpStatus.CREATED);
         }
         catch(Exception e){
-            System.out.println("Stock update Failed!!!!");
             e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -56,15 +53,15 @@ public class StockController {
     )
     {
         try{
-            Stock existingStock = stockService.getStock(1);
+            Stock existingStock = stockService.getStock(1).orElseThrow();
             stock.setId(1);
-            stockService.saveStock(stock);
-            return new ResponseEntity<>("Stock Updated Successfully",HttpStatus.OK);
+            Stock updatedStock = stockService.saveStock(stock).orElseThrow();
+            return new ResponseEntity<>(HttpStatus.OK);
 
         }
         catch(Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

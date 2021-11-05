@@ -24,8 +24,8 @@ public class AdminService {
         return Optional.ofNullable(adminRepository.findAll());
     }
 
-    public void saveAdmin(Admin admin){
-        adminRepository.save(admin);
+    public Optional<Admin> saveAdmin(Admin admin){
+       return Optional.of(adminRepository.save(admin));
     }
 
     public Optional<Admin> getAdmin(String userId){

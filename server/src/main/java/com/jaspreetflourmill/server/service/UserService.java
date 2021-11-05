@@ -19,11 +19,11 @@ public class UserService {
     private UserRepository userRepository;
 
     public Optional<List<User>> listAllUsers(){
-        return Optional.ofNullable(userRepository.findAll());
+        return Optional.of(userRepository.findAll());
     }
 
-    public void saveUser(User user){
-        userRepository.save(user);
+    public Optional<User> saveUser(User user){
+        return Optional.of(userRepository.save(user));
     }
 
     public Optional<User> getUser(String id){
@@ -33,4 +33,5 @@ public class UserService {
     public void deleteUser(String id){
         userRepository.deleteById(id);
     }
+
 }

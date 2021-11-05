@@ -26,12 +26,8 @@ public class AdminController {
     @GetMapping("")
     public ResponseEntity<List<Admin>> list(){
         try {
-            List<Admin> adminList = adminService.listAllAdmins().orElseThrow(EntityNotFoundException::new);
+            List<Admin> adminList = adminService.listAllAdmins().orElseThrow();
             return new ResponseEntity<>(adminList,HttpStatus.OK);
-        }
-        catch (EntityNotFoundException e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch (Exception e){
             e.printStackTrace();
@@ -45,42 +41,49 @@ public class AdminController {
             Admin admin = adminService.getAdmin(id).orElseThrow();
             return new ResponseEntity<>(admin, HttpStatus.OK);
         }
-        catch(NoSuchElementException e){
+        catch(Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Admin admin, @PathVariable String id){
+    public ResponseEntity<Admin> update(@RequestBody Admin admin, @PathVariable String id){
         try{
             Admin existAdmin = adminService.getAdmin(id).orElseThrow();
             admin.setId(id);
             adminService.saveAdmin(admin);
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        catch(NoSuchElementException e){
+        catch(Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/")
-    public @ResponseBody ResponseEntity<String> add(@RequestBody Admin admin){
+    public @ResponseBody ResponseEntity<Admin> add(@RequestBody Admin admin){
         try{
-            System.out.println(admin.toString());
-            adminService.saveAdmin(admin);
-            return new ResponseEntity<String>("Admin Registered Successfully", HttpStatus.OK);
+            Admin savedAdmin = adminService.saveAdmin(admin).orElseThrow();
+            return new ResponseEntity<Admin>(savedAdmin, HttpStatus.CREATED);
         }
         catch(Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id){
-        adminService.deleteAdmin(id);
+    public ResponseEntity delete(@PathVariable String id){
+        try {
+            adminService.deleteAdmin(id);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }

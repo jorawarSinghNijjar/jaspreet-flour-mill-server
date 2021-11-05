@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,24 +26,24 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public List<Transaction> listAllTransactions(){
-        return transactionRepository.findAll();
+    public Optional<List<Transaction>> listAllTransactions(){
+        return Optional.of(transactionRepository.findAll());
     }
 
-    public List<Transaction> findByCustomer(Customer customer){
-        return transactionRepository.findByCustomer(
+    public Optional<List<Transaction>> findByCustomer(Customer customer){
+        return  Optional.of(transactionRepository.findByCustomer(
                 customer,
                 Sort.by("date").descending().and(Sort.by("time").descending())
-        );
+        ));
     }
 
 
-    public void saveTransaction(Transaction transaction){
-        transactionRepository.save(transaction);
+    public Optional<Transaction> saveTransaction(Transaction transaction){
+        return Optional.of(transactionRepository.save(transaction));
     }
 
-    public Transaction getTransaction(String id){
-        return transactionRepository.findById(id).get();
+    public Optional<Transaction> getTransaction(String id){
+        return transactionRepository.findById(id);
     }
 
     public void deleteTransaction(String id){

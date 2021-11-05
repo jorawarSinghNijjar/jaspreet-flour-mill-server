@@ -19,14 +19,22 @@ public class CustomerController {
     CustomerService customerService;
 
     @GetMapping("")
-    public List<Customer> list(){
-        return customerService.listAllCustomers();
+    public ResponseEntity<List<Customer>> list(){
+        try {
+            List<Customer> customers = customerService.listAllCustomers().orElseThrow();
+            return new ResponseEntity<>(customers, HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Customer> get(@PathVariable Integer id){
         try{
-            Customer customer = customerService.getCustomer(id);
+            Customer customer = customerService.getCustomer(id).orElseThrow();
             return new ResponseEntity<>(customer, HttpStatus.OK);
         }
         catch(NoSuchElementException e){
@@ -34,38 +42,39 @@ public class CustomerController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("")
-    public @ResponseBody ResponseEntity<String> add(@RequestBody Customer customer){
+    public @ResponseBody ResponseEntity<Customer> add(@RequestBody Customer customer){
         try{
-            System.out.println("Registering customer --> " + customer.getName());
-            customerService.saveCustomer(customer);
-            return new ResponseEntity<>("Customer Registered Successfully", HttpStatus.OK);
+            Customer savedCustomer = customerService.saveCustomer(customer).orElseThrow();
+            return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
         }
         catch(Exception e){
-            System.out.println("Customer Registration Failed!!!!");
             e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/{id}")
-    public @ResponseBody ResponseEntity<String> update(
+    public @ResponseBody ResponseEntity<Customer> update(
             @RequestBody Customer customer, @PathVariable Integer id
     )
     {
         try{
-                Customer existingCustomer = customerService.getCustomer(id);
+                Customer existingCustomer = customerService.getCustomer(id).orElseThrow();
                 customer.setCustomerId(id);
-                customerService.saveCustomer(customer);
-                return new ResponseEntity<>("Customer Updated Successfully",HttpStatus.OK);
+                Customer updatedCustomer = customerService.saveCustomer(customer).orElseThrow();
+                return new ResponseEntity<>(updatedCustomer,HttpStatus.OK);
 
         }
         catch(Exception e){
-            System.out.println("Customer Update Failed!!!!");
             e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

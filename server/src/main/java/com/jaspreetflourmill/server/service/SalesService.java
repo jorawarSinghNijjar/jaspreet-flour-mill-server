@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -18,23 +19,23 @@ public class SalesService {
     @Autowired
     private SalesRepository salesRepository;
 
-    public List<Sales> listAllSales(){
-        return salesRepository.findAll();
+    public Optional<List<Sales>> listAllSales(){
+        return Optional.of(salesRepository.findAll());
     }
 
-    public void saveSales(Sales sales){
-        salesRepository.save(sales);
+    public Optional<Sales> saveSales(Sales sales){
+        return Optional.of(salesRepository.save(sales));
     }
 
-    public Sales getSales(String date){
-        return salesRepository.findById(date).get();
+    public Optional<Sales> getSales(String date){
+        return salesRepository.findById(date);
     }
 
-    public List<Sales> getSalesForMonth(int month, int year) {
-        return salesRepository.findByMonthAndYear(month,year);
+    public Optional<List<Sales>> getSalesForMonth(int month, int year) {
+        return Optional.of(salesRepository.findByMonthAndYear(month,year));
     }
 
-    public  List<Sales> getYearlySales(int year){
-        return salesRepository.findByYear(year);
+    public  Optional<List<Sales>> getYearlySales(int year){
+        return Optional.of(salesRepository.findByYear(year));
     }
 }
