@@ -3,13 +3,17 @@ package com.jaspreetflourmill.server.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -20,7 +24,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer customerId;
 
-    @OneToOne(mappedBy = "customer")
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     private CustomerAccount customerAccount;
 
     @OneToMany(mappedBy = "customer")
@@ -46,6 +50,16 @@ public class Customer {
 
     @NotNull
     private String idProof;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date",nullable = false, updatable = false)
+    private Date createDate;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modify_date")
+    private Date modifyDate;
 
     public Customer(String name, String address, String phoneNumber, String rationCardNo, LocalDate dob, String adhaarNo,
                     String idProof) {
@@ -135,4 +149,5 @@ public class Customer {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
+
 }

@@ -2,6 +2,7 @@ package com.jaspreetflourmill.server.controller;
 
 import com.jaspreetflourmill.server.model.Customer;
 import com.jaspreetflourmill.server.service.CustomerService;
+import com.sun.xml.bind.v2.runtime.output.SAXOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,8 @@ public class CustomerController {
             return new ResponseEntity<>(customer, HttpStatus.OK);
         }
         catch(NoSuchElementException e){
+            System.out.println("Customer not found !");
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -42,6 +45,7 @@ public class CustomerController {
         }
         catch(Exception e){
             System.out.println("Customer Registration Failed!!!!");
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
@@ -52,13 +56,15 @@ public class CustomerController {
     )
     {
         try{
-            Customer existingCustomer = customerService.getCustomer(id);
+                Customer existingCustomer = customerService.getCustomer(id);
                 customer.setCustomerId(id);
                 customerService.saveCustomer(customer);
                 return new ResponseEntity<>("Customer Updated Successfully",HttpStatus.OK);
 
         }
         catch(Exception e){
+            System.out.println("Customer Update Failed!!!!");
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }

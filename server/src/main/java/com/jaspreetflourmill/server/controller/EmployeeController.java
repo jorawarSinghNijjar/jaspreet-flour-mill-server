@@ -28,6 +28,7 @@ public class EmployeeController {
             return new ResponseEntity<>(employee, HttpStatus.OK);
         }
         catch(NoSuchElementException e){
+            e.printStackTrace();
             return new ResponseEntity<Employee>(HttpStatus.NOT_FOUND);
         }
     }
@@ -41,6 +42,7 @@ public class EmployeeController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch(NoSuchElementException e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -53,6 +55,7 @@ public class EmployeeController {
             return new ResponseEntity<String>("Employee Registered Successfully", HttpStatus.OK);
         }
         catch(Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
