@@ -24,7 +24,7 @@ public class EmployeeController {
     @GetMapping("/{id}")
     public ResponseEntity<Employee> get(@PathVariable String id){
         try{
-            Employee employee = employeeService.getEmployee(id);
+            Employee employee = employeeService.getEmployee(id).orElseThrow();
             return new ResponseEntity<>(employee, HttpStatus.OK);
         }
         catch(NoSuchElementException e){
@@ -36,8 +36,8 @@ public class EmployeeController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody Employee employee, @PathVariable String id){
         try{
-            Employee existEmployee = employeeService.getEmployee(id);
-            employee.setEmployeeId(id);
+            Employee existEmployee = employeeService.getEmployee(id).orElseThrow();
+            employee.setId(id);
             employeeService.saveEmployee(employee);
             return new ResponseEntity<>(HttpStatus.OK);
         }

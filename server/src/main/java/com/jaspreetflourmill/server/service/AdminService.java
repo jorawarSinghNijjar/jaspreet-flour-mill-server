@@ -3,39 +3,37 @@ package com.jaspreetflourmill.server.service;
 import com.jaspreetflourmill.server.model.Admin;
 import com.jaspreetflourmill.server.model.Employee;
 import com.jaspreetflourmill.server.model.User;
-import com.jaspreetflourmill.server.repository.EmployeeRepository;
+import com.jaspreetflourmill.server.repository.AdminRepository;
 import com.jaspreetflourmill.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 @Transactional
-public class EmployeeService {
+public class AdminService {
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private AdminRepository adminRepository;
     @Autowired
     private UserRepository userRepository;
 
-    public List<Employee> listAllEmployees(){
-        return employeeRepository.findAll();
+    public Optional<List<Admin>> listAllAdmins(){
+        return Optional.ofNullable(adminRepository.findAll());
     }
 
-    public void saveEmployee(Employee employee){
-        employeeRepository.save(employee);
+    public void saveAdmin(Admin admin){
+        adminRepository.save(admin);
     }
 
-    public Optional<Employee> getEmployee(String userId){
+    public Optional<Admin> getAdmin(String userId){
         Optional<User> user = userRepository.getUser(userId);
-        return employeeRepository.findByUser(user.get());
+        return adminRepository.findByUser(user.get());
     }
 
-    public void deleteEmployee(String id){
-        employeeRepository.deleteById(id);
+    public void deleteAdmin(String id){
+        adminRepository.deleteById(id);
     }
-
 }
