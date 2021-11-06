@@ -48,7 +48,7 @@ public class StockController {
     }
 
     @PutMapping("/update")
-    public @ResponseBody ResponseEntity<String> update(
+    public @ResponseBody ResponseEntity<Stock> update(
             @RequestBody Stock stock
     )
     {
@@ -56,12 +56,12 @@ public class StockController {
             Stock existingStock = stockService.getStock(1).orElseThrow();
             stock.setId(1);
             Stock updatedStock = stockService.saveStock(stock).orElseThrow();
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(updatedStock, HttpStatus.OK);
 
         }
         catch(Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

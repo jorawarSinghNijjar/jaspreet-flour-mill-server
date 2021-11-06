@@ -52,8 +52,8 @@ public class AdminController {
         try{
             Admin existAdmin = adminService.getAdmin(id).orElseThrow();
             admin.setId(id);
-            adminService.saveAdmin(admin);
-            return new ResponseEntity<>(HttpStatus.OK);
+            Admin updatedAdmin = adminService.saveAdmin(admin).orElseThrow();
+            return new ResponseEntity<>(updatedAdmin, HttpStatus.OK);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -61,11 +61,11 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public @ResponseBody ResponseEntity<Admin> add(@RequestBody Admin admin){
         try{
             Admin savedAdmin = adminService.saveAdmin(admin).orElseThrow();
-            return new ResponseEntity<Admin>(savedAdmin, HttpStatus.CREATED);
+            return new ResponseEntity<>(savedAdmin, HttpStatus.CREATED);
         }
         catch(Exception e){
             e.printStackTrace();

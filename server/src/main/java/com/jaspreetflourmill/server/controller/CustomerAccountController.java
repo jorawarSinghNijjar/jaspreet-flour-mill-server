@@ -73,7 +73,7 @@ public class CustomerAccountController {
                 customerAccount.setCustomer(existingCustomerAccount.getCustomer());
                 CustomerAccount updatedCustomerAccount = customerAccountService.saveCustomerAccount(customerAccount).orElseThrow();
 
-                return new ResponseEntity<CustomerAccount>(updatedCustomerAccount,HttpStatus.OK);
+                return new ResponseEntity<>(updatedCustomerAccount,HttpStatus.OK);
         }
         catch(Exception e){
             e.printStackTrace();

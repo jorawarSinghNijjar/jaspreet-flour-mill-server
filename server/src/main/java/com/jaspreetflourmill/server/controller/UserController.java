@@ -70,11 +70,11 @@ public class UserController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public @ResponseBody ResponseEntity<User> add(@RequestBody User user){
         try{
             User savedUser = userService.saveUser(user).orElseThrow();
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(savedUser,HttpStatus.CREATED);
         }
         catch(Exception e){
             e.printStackTrace();

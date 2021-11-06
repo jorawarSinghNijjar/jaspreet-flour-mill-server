@@ -53,7 +53,7 @@ public class EmployeeController {
             Employee existEmployee = employeeService.getEmployee(id).orElseThrow();
             employee.setId(id);
             Employee updatedEmployee = employeeService.saveEmployee(employee).orElseThrow();
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
         }
         catch(NoSuchElementException e){
             e.printStackTrace();
@@ -65,7 +65,7 @@ public class EmployeeController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public @ResponseBody ResponseEntity<Employee> add(@RequestBody Employee employee){
         try{
             Employee savedEmployee = employeeService.saveEmployee(employee).orElseThrow();

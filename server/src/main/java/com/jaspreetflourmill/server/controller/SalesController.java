@@ -72,7 +72,7 @@ public class SalesController {
     public @ResponseBody ResponseEntity<Sales> add(@RequestBody Sales sales){
         try{
             Sales savedSale = salesService.saveSales(sales).orElseThrow();
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(savedSale, HttpStatus.CREATED);
         }
         catch(Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -88,7 +88,7 @@ public class SalesController {
             Sales existingSales = salesService.getSales(date).orElseThrow();
             sales.setDate(date);
             Sales updatedSale = salesService.saveSales(sales).orElseThrow();
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(updatedSale, HttpStatus.OK);
 
         }
         catch(Exception e){
