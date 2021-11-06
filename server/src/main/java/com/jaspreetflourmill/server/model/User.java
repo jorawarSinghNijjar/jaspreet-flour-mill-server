@@ -4,16 +4,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name="users")
-public class User {
-
-    public enum Role{
-        ADMIN,
-        EMPLOYEE
-    }
+public class User{
 
     @OneToOne(mappedBy="user")
     private Employee employee;
@@ -43,6 +38,7 @@ public class User {
     private Date modifyDate;
 
     public User() {
+
     }
 
     public User(String id, String password, Role role) {
@@ -59,12 +55,12 @@ public class User {
         this.id = id;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public Role getRole() {
@@ -74,4 +70,5 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
 }

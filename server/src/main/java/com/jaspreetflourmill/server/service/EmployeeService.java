@@ -21,12 +21,12 @@ public class EmployeeService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<Employee> listAllEmployees(){
-        return employeeRepository.findAll();
+    public Optional<List<Employee>> listAllEmployees(){
+        return Optional.of(employeeRepository.findAll());
     }
 
-    public void saveEmployee(Employee employee){
-        employeeRepository.save(employee);
+    public Optional<Employee> saveEmployee(Employee employee){
+        return Optional.of(employeeRepository.save(employee));
     }
 
     public Optional<Employee> getEmployee(String userId){

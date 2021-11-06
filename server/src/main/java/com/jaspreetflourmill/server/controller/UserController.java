@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     UserService userService;
@@ -23,12 +23,16 @@ public class UserController {
     @GetMapping("")
     public ResponseEntity<List<User>> list(){
         try {
-            List<User> userList = userService.listAllUsers().orElseThrow(EntityNotFoundException::new);
+            List<User> userList = userService.listAllUsers().orElseThrow();
             return new ResponseEntity<>(userList,HttpStatus.OK);
         }
-        catch (EntityNotFoundException e){
+        catch (NoSuchElementException e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -42,32 +46,39 @@ public class UserController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody User user, @PathVariable String id){
+    public ResponseEntity<User> update(@RequestBody User user, @PathVariable String id){
         try{
             User existUser = userService.getUser(id).orElseThrow();
             user.setId(id);
-            userService.saveUser(user);
-            return new ResponseEntity<>(HttpStatus.OK);
+            User updatedUser = userService.saveUser(user).orElseThrow();
+            return new ResponseEntity<>(updatedUser,HttpStatus.OK);
         }
         catch(NoSuchElementException e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @PostMapping("/")
-    public @ResponseBody ResponseEntity<String> add(@RequestBody User user){
+    @PostMapping("")
+    public @ResponseBody ResponseEntity<User> add(@RequestBody User user){
         try{
-            System.out.println(user.toString());
-            userService.saveUser(user);
-            return new ResponseEntity<String>("User Registered Successfully", HttpStatus.OK);
+            User savedUser = userService.saveUser(user).orElseThrow();
+            return new ResponseEntity<>(savedUser,HttpStatus.CREATED);
         }
         catch(Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }

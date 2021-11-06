@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -16,15 +17,15 @@ public class CustomerAccountService {
     @Autowired
     private CustomerAccountRepository customerAccountRepository;
 
-    public List<CustomerAccount> listAllCustomerAccounts(){
-        return customerAccountRepository.findAll();
+    public Optional<List<CustomerAccount>> listAllCustomerAccounts(){
+        return Optional.of(customerAccountRepository.findAll());
     }
 
-    public void saveCustomerAccount(CustomerAccount customerAccount){
-        customerAccountRepository.save(customerAccount);
+    public Optional<CustomerAccount> saveCustomerAccount(CustomerAccount customerAccount){
+        return Optional.of(customerAccountRepository.save(customerAccount));
     }
 
-    public CustomerAccount getCustomerAccount(Integer id){
+    public Optional<CustomerAccount> getCustomerAccount(Integer id){
         return customerAccountRepository.findCustomerAccountByCustomer(id);
     }
     public void deleteCustomerAccount(Integer id){

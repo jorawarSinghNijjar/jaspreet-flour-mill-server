@@ -9,9 +9,10 @@ import org.springframework.data.repository.query.Param;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
+import java.util.Optional;
 
 public interface CustomerAccountRepository extends JpaRepository<CustomerAccount,Integer> {
     @Query("SELECT c FROM CustomerAccount c WHERE c.customer.customerId = ?1")
-    CustomerAccount findCustomerAccountByCustomer(Integer customerId);
+    Optional<CustomerAccount> findCustomerAccountByCustomer(Integer customerId);
 
 }
