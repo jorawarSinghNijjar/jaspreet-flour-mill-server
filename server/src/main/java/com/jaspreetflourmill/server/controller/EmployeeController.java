@@ -51,7 +51,7 @@ public class EmployeeController {
     public ResponseEntity<Employee> update(@RequestBody Employee employee, @PathVariable String id){
         try{
             Employee existEmployee = employeeService.getEmployee(id).orElseThrow();
-            employee.setId(id);
+            employee.setId(Integer.parseInt(id));
             Employee updatedEmployee = employeeService.saveEmployee(employee).orElseThrow();
             return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
         }
@@ -65,7 +65,7 @@ public class EmployeeController {
         }
     }
 
-    @PostMapping("")
+    @PostMapping("")    
     public @ResponseBody ResponseEntity<Employee> add(@RequestBody Employee employee){
         try{
             Employee savedEmployee = employeeService.saveEmployee(employee).orElseThrow();
