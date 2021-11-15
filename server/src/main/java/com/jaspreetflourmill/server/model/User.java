@@ -27,6 +27,9 @@ public class User{
     @Column(nullable = false)
     private Role role;
 
+    @Column
+    private String profileImgLocation;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date",nullable = false, updatable = false)
@@ -69,6 +72,14 @@ public class User{
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getProfileImgLocation() {
+        return profileImgLocation;
+    }
+
+    public void setProfileImgLocation(String profileImgLocation) {
+        this.profileImgLocation = profileImgLocation;
     }
 
 }
