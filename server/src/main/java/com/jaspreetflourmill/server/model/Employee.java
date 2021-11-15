@@ -28,6 +28,9 @@ public class Employee {
     private String name;
 
     @Column(nullable = false)
+    private String emailId;
+
+    @Column(nullable = false)
     private String contactNumber;
 
     @Column(nullable = false)
@@ -53,9 +56,10 @@ public class Employee {
 
     }
 
-    public Employee(User user, String name, String contactNumber, String address, String jobDesignation, LocalDate dob) {
+    public Employee(User user, String name, String emailId, String contactNumber, String address, String jobDesignation, LocalDate dob) {
         this.user = user;
         this.name = name;
+        this.emailId = emailId;
         this.contactNumber = contactNumber;
         this.address = address;
         this.jobDesignation = jobDesignation;
@@ -120,6 +124,14 @@ public class Employee {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
     }
 
 }

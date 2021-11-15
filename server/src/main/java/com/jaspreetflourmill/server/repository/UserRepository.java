@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,String> {
     @Query(value = "SELECT * FROM users WHERE id = ?1", nativeQuery = true)
     Optional<User> getUser(String id);
+
+    Optional<User> findByResetToken(String resetToken);
 }

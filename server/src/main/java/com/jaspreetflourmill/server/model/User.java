@@ -30,6 +30,9 @@ public class User{
     @Column
     private String profileImgLocation;
 
+    @Column
+    private String resetToken;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date",nullable = false, updatable = false)
@@ -82,4 +85,11 @@ public class User{
         this.profileImgLocation = profileImgLocation;
     }
 
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
 }
