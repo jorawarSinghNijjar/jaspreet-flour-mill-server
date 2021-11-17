@@ -8,10 +8,7 @@ import com.jaspreetflourmill.server.repository.AdminRepository;
 import com.jaspreetflourmill.server.repository.EmployeeRepository;
 import com.jaspreetflourmill.server.repository.UserRepository;
 
-import com.sendgrid.Method;
-import com.sendgrid.Request;
-import com.sendgrid.Response;
-import com.sendgrid.SendGrid;
+import com.sendgrid.*;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
@@ -36,6 +33,8 @@ public class UserService {
     private AdminRepository adminRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private SendGrid sendGridClient;
 
 
     public Optional<List<User>> listAllUsers() {
@@ -98,13 +97,13 @@ public class UserService {
         Content content = new Content("text/plain", "Your Reset Token is : " + generatedResetToken);
         Mail mail = new Mail(from, subject, to, content);
 
-        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+//        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
-            Response response = sg.api(request);
+            Response response = sendGridClient.api(request);
             logger.info(response.getBody());
 
             if (response.getStatusCode() == HttpStatus.SC_ACCEPTED) {
