@@ -33,7 +33,10 @@ public class AdminService {
         return adminRepository.findByUser(user.get());
     }
 
-    public void deleteAdmin(String id){
-        adminRepository.deleteById(id);
+    public void deleteAdmin(String userId){
+        getAdmin(userId).ifPresent(admin -> {
+            adminRepository.deleteById(admin.getId());
+        });
+        userRepository.deleteById(userId);
     }
 }

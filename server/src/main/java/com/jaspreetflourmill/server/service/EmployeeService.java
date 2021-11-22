@@ -34,8 +34,9 @@ public class EmployeeService {
         return employeeRepository.findByUser(user.get());
     }
 
-    public void deleteEmployee(String id){
-        employeeRepository.deleteById(id);
+    public void deleteEmployee(String userId){
+        getEmployee(userId).ifPresent(employee -> employeeRepository.deleteById(employee.getId()));
+        userRepository.deleteById(userId);
     }
 
 }
