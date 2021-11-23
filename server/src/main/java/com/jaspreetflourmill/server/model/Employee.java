@@ -25,10 +25,10 @@ public class Employee {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String emailId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String contactNumber;
 
     @Column(nullable = false)

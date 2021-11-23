@@ -4,6 +4,7 @@ import com.jaspreetflourmill.server.model.Customer;
 import com.jaspreetflourmill.server.model.Employee;
 import com.jaspreetflourmill.server.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -71,11 +72,13 @@ public class EmployeeController {
             Employee savedEmployee = employeeService.saveEmployee(employee).orElseThrow();
             return new ResponseEntity<>(savedEmployee,HttpStatus.CREATED);
         }
+        catch (DataIntegrityViolationException e){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         catch(Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     @DeleteMapping("/{id}")
