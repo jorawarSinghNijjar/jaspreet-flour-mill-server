@@ -28,7 +28,11 @@ public class TransactionController {
         try{
            List<Transaction> transactions = transactionService.listAllTransactions().orElseThrow();
            return new ResponseEntity<>(transactions, HttpStatus.OK);
-        }catch (Exception e){
+        }
+        catch (NoSuchElementException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -42,6 +46,9 @@ public class TransactionController {
             Customer customer = customerService.getCustomer(customerIdInt).orElseThrow();
             List<Transaction> transactions = transactionService.findByCustomer(customer).orElseThrow();
             return new ResponseEntity<>(transactions,HttpStatus.OK);
+        }
+        catch (NoSuchElementException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
