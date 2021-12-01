@@ -28,14 +28,19 @@ public class Sales {
 
     private int year;
 
+    @Column(precision = 10, scale = 2)
     private Double totalStoredWheatBalance;
 
+    @Column(precision = 10, scale = 2)
     private Double totalWheatDeposited;
 
+    @Column(precision = 10, scale = 2)
     private Double totalWheatSold;
 
+    @Column(precision = 10, scale = 2)
     private Double totalGrindingCharges;
 
+    @Column(precision = 10, scale = 2)
     private Double totalGrindingChargesPaid;
 
     @CreationTimestamp

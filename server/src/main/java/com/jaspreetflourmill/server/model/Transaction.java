@@ -30,22 +30,27 @@ public class Transaction {
     @Column(columnDefinition = "TIME")
     private String time;
 
-    @NotNull
+    @Column(precision = 10, scale = 2)
     private double flourPickupQty;
 
-    @NotNull
+    @Column(precision = 10, scale = 2)
     private double grindingRate;
 
-    @NotNull
+    @Column(precision = 10, scale = 2)
     private double grindingCharges;
-    @NotNull
+
+    @Column(precision = 10, scale = 2)
     private double grindingChargesPaid;
-    @NotNull
+
+    @Column(precision = 10, scale = 2)
     private double customerBalanceGrindingCharges;
-    @NotNull
+
+    @Column(precision = 10, scale = 2)
     private double customerStoredFlourBalanceQty;
+
     @NotNull
     private String orderPickedBy;
+
     @NotNull
     private String cashierName;
 

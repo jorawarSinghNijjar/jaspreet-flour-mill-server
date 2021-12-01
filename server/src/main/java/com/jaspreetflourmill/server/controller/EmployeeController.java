@@ -52,7 +52,7 @@ public class EmployeeController {
     public ResponseEntity<Employee> update(@RequestBody Employee employee, @PathVariable String id){
         try{
             Employee existEmployee = employeeService.getEmployee(id).orElseThrow();
-            employee.setId(Integer.parseInt(id));
+            employee.setId(existEmployee.getId());
             Employee updatedEmployee = employeeService.saveEmployee(employee).orElseThrow();
             return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
         }

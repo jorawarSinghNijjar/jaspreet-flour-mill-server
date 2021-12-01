@@ -18,19 +18,22 @@ public class CustomerAccount {
     @JoinColumn(name = "customerId",referencedColumnName = "customer_id")
     private Customer customer;
 
-    @NotNull
+    @Column(precision = 10, scale = 2)
     private double wheatDepositQty;
 
-    @NotNull
+    @Column(precision = 10, scale = 2)
     private double wheatProcessingDeductionQty;
 
-    @NotNull
+    @Column(precision = 10, scale = 2)
     private double initialWheatQty;
 
+    @Column(precision = 10, scale = 2)
     private double currentWheatBalance;
 
+    @Column(precision = 10, scale = 2)
     private double grindingChargesBalance;
 
+    @Column(precision = 10, scale = 2)
     private double grindingRate;
 
     private int rowsPrinted;
