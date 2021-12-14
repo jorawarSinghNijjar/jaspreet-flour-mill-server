@@ -2,6 +2,7 @@ package com.jaspreetflourmill.server.service;
 
 import com.jaspreetflourmill.server.model.Customer;
 import com.jaspreetflourmill.server.model.CustomerAccount;
+import com.jaspreetflourmill.server.model.User;
 import com.jaspreetflourmill.server.repository.CustomerAccountRepository;
 import com.jaspreetflourmill.server.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import java.util.Optional;
 public class CustomerAccountService {
     @Autowired
     private CustomerAccountRepository customerAccountRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     public Optional<List<CustomerAccount>> listAllCustomerAccounts(){
         return Optional.of(customerAccountRepository.findAll());
@@ -29,7 +32,8 @@ public class CustomerAccountService {
         return customerAccountRepository.findCustomerAccountByCustomer(id);
     }
     public void deleteCustomerAccount(Integer id){
-        customerAccountRepository.deleteById(id);
+        Customer customer = customerRepository.getOne(id);
+        customerAccountRepository.deleteByCustomerId(customer.getCustomerId());
     }
 
 }

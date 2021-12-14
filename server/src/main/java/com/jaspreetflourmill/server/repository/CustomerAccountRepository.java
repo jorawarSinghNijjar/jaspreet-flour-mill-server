@@ -4,6 +4,7 @@ import com.jaspreetflourmill.server.model.Customer;
 import com.jaspreetflourmill.server.model.CustomerAccount;
 import com.jaspreetflourmill.server.model.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -15,4 +16,7 @@ public interface CustomerAccountRepository extends JpaRepository<CustomerAccount
     @Query("SELECT c FROM CustomerAccount c WHERE c.customer.customerId = ?1")
     Optional<CustomerAccount> findCustomerAccountByCustomer(Integer customerId);
 
+    @Modifying
+    @Query("DELETE FROM CustomerAccount c WHERE c.customer.customerId = :id")
+    void deleteByCustomerId(@Param("id") Integer id);
 }
