@@ -88,7 +88,7 @@ public class UserService {
     }
 
     // Sends reset token to user email and saves reset token in users table DB
-    public void sendResetToken(String emailId, User user) throws IOException {
+    public void sendResetToken(String emailId, User user) throws IOException{
         // Should be replaced by clients email id ( It has to be verified from Twilio)
         Email from = new Email("niajax1469@gmail.com");
         String subject = "Reset Token for: " + user.getId();
@@ -109,6 +109,9 @@ public class UserService {
             if (response.getStatusCode() == HttpStatus.SC_ACCEPTED) {
                 user.setResetToken(generatedResetToken);
                 saveUser(user);
+            }
+            else {
+                throw new IOException(response.getBody());
             }
         } catch (IOException ex) {
             throw ex;
